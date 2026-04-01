@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user-specific academic settings and profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique identifier for the user." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "email": { "type": "string", "format": "email", "description": "The user's email address." },
+        "targetGPA": { "type": "number", "description": "The user's target GPA." },
+        "currentCGPA": { "type": "number", "description": "The user's current cumulative GPA." },
+        "totalCredits": { "type": "number", "description": "Total credits earned so far." }
+      },
+      "required": ["uid", "email"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Represents an academic course taken by a student.",
+      "type": "object",
+      "properties": {
+        "courseCode": { "type": "string", "description": "The code of the course (e.g., CS101)." },
+        "courseName": { "type": "string", "description": "The name of the course." },
+        "credits": { "type": "number", "description": "The number of credits for the course." },
+        "grade": { "type": "string", "enum": ["A", "B+", "B", "C+", "C", "D", "F", ""], "description": "The grade received in the course." },
+        "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard"], "description": "The perceived difficulty level of the course." },
+        "semesterId": { "type": "string", "description": "The ID of the semester this course belongs to." },
+        "userId": { "type": "string", "description": "The ID of the user who owns this course." }
+      },
+      "required": ["courseName", "credits", "userId"]
+    },
+    "Deadline": {
+      "title": "Deadline",
+      "description": "An academic task with a due date.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the task." },
+        "type": { "type": "string", "enum": ["assignment", "exam", "project", "quiz"], "description": "The type of task." },
+        "dueDate": { "type": "string", "format": "date-time", "description": "The date and time the task is due." },
+        "status": { "type": "string", "enum": ["pending", "completed"], "description": "The current status of the task." },
+        "userId": { "type": "string", "description": "The ID of the user who owns this task." }
+      },
+      "required": ["title", "type", "dueDate", "userId"]
+    },
+    "Semester": {
+      "title": "Semester",
+      "description": "A specific academic period.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "The name of the semester (e.g., Fall 2025)." },
+        "userId": { "type": "string", "description": "The ID of the user who owns this semester." }
+      },
+      "required": ["name", "userId"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles."
+    },
+    "users/{userId}/courses": {
+      "schema": "Course",
+      "description": "Courses belonging to a specific user."
+    },
+    "users/{userId}/deadlines": {
+      "schema": "Deadline",
+      "description": "Deadlines belonging to a specific user."
+    },
+    "users/{userId}/semesters": {
+      "schema": "Semester",
+      "description": "Semesters belonging to a specific user."
+    }
+  }
+}

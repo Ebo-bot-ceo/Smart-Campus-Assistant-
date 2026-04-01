@@ -1,0 +1,5 @@
+{
+  "name": "Smart Campus Assistant",
+  "description": "A comprehensive academic management tool for students featuring GPA tracking, performance prediction, and deadline management.",
+  "requestFramePermissions": []
+}
